@@ -39,9 +39,9 @@ passport.serializeUser(serializeUser)
 passport.deserializeUser(deserializeUser)
 
 # use the standard password procedure
-passport.use(new LocalStrategy(
+passport.use new LocalStrategy
   usernameField: 'username',
   passwordField: 'password'
-, authenticate))
+, authenticate
 
 module.exports = passport

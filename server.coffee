@@ -9,10 +9,10 @@ io = socketIO(httpServer)
 auth = require('./server/config/auth_config');
 
 # configure the server
-require('./server/config.coffee')(app, io)
+require('./server/config/app_config')(app, auth)
 
 # set up the routes
-require('./server/routes.coffee')(app, auth)
+require('./server/routes')(app, auth)
 
 # set up the realtime module
 # require('./server/realtime.coffee')(io)
