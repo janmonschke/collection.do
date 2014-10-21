@@ -14,5 +14,7 @@ module.exports =
     port: '5984',
     name: 'collection-data'
   ,
+  embedly:
+    key: 'badd0d5e8376450eaff81ea12c1ea490'
   salt: '9wvpwiun28bv83vsc<b7ciuesb9w',
   sessionSecret: '983hf38fgl3783gdfn'

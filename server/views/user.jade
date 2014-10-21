@@ -1,0 +1,7 @@
+extends layout
+
+block content
+  script#startup-data.
+    window.startupData = !{JSON.stringify(collections)}
+
+  h1 Wow, you're logged in

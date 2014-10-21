@@ -1,13 +1,13 @@
 bcrypt = require('bcrypt')
 connection = require('../database_connection')()
-db = connection.database('collection-data')
+db = connection.database('collection-users')
 
 module.exports = class User
   @get: (id, cb) ->
     db.get(String(id), cb)
 
   @findByName: (name, cb) ->
-    db.view 'user/byUsername', { key: name }, (err, res) ->
+    db.view 'users/userByUsername', { key: name }, (err, res) ->
       if err? or res.length == 0
         return cb(null, null)
       cb(null, res[0].value)

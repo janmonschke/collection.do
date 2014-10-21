@@ -3,6 +3,7 @@ express = require('express')
 config = require('./services_config')
 session = require('express-session')
 RedisStore = require('connect-redis')(session)
+flash = require('connect-flash')
 path = require('path')
 serveStatic = require('serve-static')
 bodyParser = require('body-parser')
@@ -38,9 +39,13 @@ module.exports = (app, auth) ->
   app.use(auth.initialize())
   app.use(auth.session())
 
+  # make flashs available
+  app.use flash()
+
   # make the user available
   app.use (req, res, next) ->
     res.locals.user = req.user
+    res.locals.errors = req.flash('error')
     next()
 
   # parse cookies

@@ -1,6 +1,10 @@
 extends layout
 
 block content
+
+  each error in errors
+    p= error
+
   form(action='/login', method='post')
     input(name='username', placeholder='Username', autofocus)
     input(name='password', placeholder='Password', type='password')
