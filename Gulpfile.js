@@ -14,6 +14,10 @@ gulp.task('browserify', function(){
           entries: ['./app/app.js']
         })
         .bundle()
+        .on('error', function(err){
+          console.log(err.message);
+          this.end();
+        })
         .pipe(source('app.js'))
         .pipe(gulp.dest('./public/'));
 });

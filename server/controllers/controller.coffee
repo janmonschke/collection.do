@@ -4,12 +4,15 @@ class Controller
   constructor: ->
     # set up the before filters
     for method, filter of @before()
-      original = @[method]
-      @[method] = (req, res, next) ->
-        # the filter's next function will be the original function
-        _next = ->
-          original req, res, next
-        filter req, res, _next
+      @_createFilter method, filter
+
+  _createFilter: (method, filter) ->
+    original = @[method]
+    @[method] = (req, res, next) ->
+      # the filter's next function will be the original function
+      _next = ->
+        original req, res, next
+      filter req, res, _next
 
   # fails if user is not logged in
   ensureAuthenticated: (req, res, next) =>

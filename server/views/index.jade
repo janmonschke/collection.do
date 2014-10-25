@@ -1,4 +1,19 @@
 extends layout
 
+block navigation
+  ul.top-navigation
+    li.top-navigation--item
+      a.top-navigation--link.is-active(href="/") Collection
+    if user
+      li.top-navigation--item
+        a.top-navigation--link(href="/settings") Settings
+      li.top-navigation--item
+        a.top-navigation--link(href="/logout") Logout
+    else
+      li.top-navigation--item
+        a.top-navigation--link(href="/register") Register
+      li.top-navigation--item
+        a.top-navigation--link(href="/login") Login
+
 block content
   h1 collection.do

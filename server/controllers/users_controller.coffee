@@ -24,7 +24,6 @@ class UserController extends Controller
           res.redirect('/me')
 
   me: (req, res) ->
-    Collection.byUserId req.user._id, (err, collections) ->
-      res.render 'user', collections: collections
+    res.render 'user'
 
 module.exports = UserController

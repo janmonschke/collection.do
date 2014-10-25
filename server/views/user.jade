@@ -1,7 +1,12 @@
 extends layout
 
-block content
-  script#startup-data.
-    window.startupData = !{JSON.stringify(collections)}
+block navigation
+  ul.top-navigation
+    li.top-navigation--item
+      a.top-navigation--link.is-active(href="/me") My Collections
+    li.top-navigation--item
+      a.top-navigation--link(href="/settings") Settings
+    li.top-navigation--item
+      a.top-navigation--link(href="/logout") Logout
 
-  h1 Wow, you're logged in
+block content

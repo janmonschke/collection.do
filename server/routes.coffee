@@ -30,4 +30,7 @@ module.exports = (app, auth) ->
 
   app.get '/me', user.me
 
-  app.post '/:user_id/collection', collection.create
+  app.get '/api/collections', collection.index
+  app.post '/api/collections', collection.create
+
+  # app.get '/:user_id/:collection_id', collection.show
