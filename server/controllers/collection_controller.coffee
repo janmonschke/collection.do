@@ -1,5 +1,6 @@
 Controller = require('./controller')
 Collection = require('../models/collection')
+Item = require('../models/item')
 
 class CollectionController extends Controller
   before: ->

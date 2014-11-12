@@ -6,7 +6,7 @@ var template = _.template("\
     <input class='collection--input', type='text' placeholder='Create a new collection' /> \
   </form> \
   <% collections.forEach(function(collection) { %> \
-    <a class='collection--title-link' href=''><%= collection.title %></a> \
+    <a class='collection--title-link' href='/user/<%= collection.owner_id %>/collection/<%= collection._id %>'><%= collection.title %></a> \
   <% }) %>")
 
 module.exports = ApplicationView.extend({

@@ -1,9 +1,11 @@
 UserController = require('./controllers/users_controller')
 CollectionController = require('./controllers/collection_controller')
+ItemsController = require('./controllers/items_controller')
 
 module.exports = (app, auth) ->
   user = new UserController()
   collection = new CollectionController()
+  items = new ItemsController()
 
   loginIfNotLoggedIn = (req, res, next) ->
     if !req.user
@@ -33,4 +35,5 @@ module.exports = (app, auth) ->
   app.get '/api/collections', collection.index
   app.post '/api/collections', collection.create
 
-  # app.get '/:user_id/:collection_id', collection.show
+  app.get '/user/:user_id/collection/:collection_id', items.index
+  app.post '/user/:user_id/collection/:collection_id/items', items.create

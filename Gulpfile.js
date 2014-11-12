@@ -16,7 +16,6 @@ gulp.task('browserify', function(){
         .bundle()
         .on('error', function(err){
           console.log(err.message);
-          this.end();
         })
         .pipe(source('app.js'))
         .pipe(gulp.dest('./public/'));
