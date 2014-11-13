@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var notify = require('gulp-notify');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 var stylus = require('gulp-stylus');
@@ -10,12 +11,19 @@ var isDebugEnv = env == 'development';
 var isProductionEnv = env == 'production';
 
 gulp.task('browserify', function(){
-    return browserify({
-          entries: ['./app/app.js']
-        })
+    return browserify('./app/app.js')
         .bundle()
         .on('error', function(err){
-          console.log(err.message);
+          if(isDebugEnv){
+            var args = Array.prototype.slice.call(arguments);
+
+            notify.onError({
+              title: "Compile Error",
+              message: "<%= error.message %>"
+            }).apply(this, args);
+          }
+          console.error(err.message);
+          this.emit('end');
         })
         .pipe(source('app.js'))
         .pipe(gulp.dest('./public/'));
