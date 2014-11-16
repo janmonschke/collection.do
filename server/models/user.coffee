@@ -1,4 +1,5 @@
 bcrypt = require('bcrypt')
+User
 connection = require('../database_connection')()
 db = connection.database('collection-users')
 
@@ -32,7 +33,7 @@ module.exports = class User
 
   @createWithPassword: (data, pw, cb) ->
     User.findByName data.username, (err, user) ->
-      return done({message: 'Username already taken'}) if user?
+      return cb({message: 'Username already taken'}) if user?
 
       # hash the password and create the user
       bcrypt.hash pw, 10, (err, hash) ->

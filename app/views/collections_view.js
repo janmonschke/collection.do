@@ -6,7 +6,8 @@ var template = _.template("\
     <input class='collection--input', type='text' placeholder='Create a new collection' /> \
   </form> \
   <% collections.forEach(function(collection) { %> \
-    <a class='collection--title-link' href='/user/<%= collection.owner_id %>/collection/<%= collection._id %>'><%= collection.title %></a> \
+    <a class='collection--title-link' href='/user/<%= collection.owners[0].id %>/collection/<%= collection.id %>'><%= collection.title %></a> \
+    <div class='collection--authors'><%= collection.owners_string %></div> \
   <% }) %>")
 
 module.exports = ApplicationView.extend({
@@ -15,17 +16,23 @@ module.exports = ApplicationView.extend({
   },
 
   initialize: function(options){
-    this.collection = options.collection;
+    this.collections = options.collections;
   },
 
   template: template,
 
   getRenderData: function(){
-    return { collections: this.collection.toJSON() };
+    return { collections: this.collections.toJSON() };
   },
 
   createNewCollection: function(event){
     event.preventDefault();
-    console.log(this.$('.collection--input').val());
+    var title = this.$('.collection--input').val();
+
+    if(title.length == 0) return
+
+    this.collections.create({
+      title: title
+    });
   }
 });

@@ -1,7 +1,8 @@
 Controller = require('./controller')
-Collection = require('../models/collection')
 Embedly = require('../models/embedly')
-Item = require('../models/item')
+Item = require('../db').models.Item
+Collection = require('../db').models.Collection
+User = require('../db').models.User
 
 class CollectionController extends Controller
   before: ->
@@ -10,8 +11,9 @@ class CollectionController extends Controller
 
   index: (req, res) ->
     if req.xhr
-      Item.byCollectionId req.params.collection_id, (err, docs) ->
-        res.json docs
+      console.log where: CollectionId: req.params.collection_id
+      Item.find(where: CollectionId: req.params.collection_id).complete (err, items = []) ->
+        res.json items
     else
       res.render 'user'
 
@@ -22,23 +24,26 @@ class CollectionController extends Controller
 
     return @['400'](req, res) unless url
 
-    baseItem =
-      collection_id: collectionId
-      url: url
-
-    Collection.get collectionId, (err, collection) =>
+    Collection.find({
+      where: {id: collectionId}
+      include: [{
+        model: User,
+        as: 'owners',
+        attributes: ['id', 'name']
+      }]
+    }).complete (err, collection) =>
       return @['500'](req, res) if err
       return @['404'](req, res) if not collection
-      return @['403'](req, res) if collection.shared_with.indexOf(currUserId) is -1 and collection.owner_id isnt currUserId
+      # return @['403'](req, res) if collection.shared_with.indexOf(currUserId) is -1 and collection.owner_id isnt currUserId
 
       Embedly.get url, (err, embedly) =>
         return @['500'](req, res) if err
         return @['404'](req, res) if not embedly
 
-        baseItem.content = embedly
-
-        Item.create baseItem, (err, item) =>
+        Item.create(embedly).complete (err, item) =>
           return @['500'](req, res) if err or not item
+
+          collection.addItems([item])
           res.json item
 
 module.exports = CollectionController

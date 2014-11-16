@@ -2,13 +2,13 @@ bcrypt = require('bcrypt')
 passport = require('passport')
 LocalStrategy = require('passport-local').Strategy
 
-User = require('../models/user')
+User = require('../db').models.User
 
 checkPassword = (user, pw, cb) ->
   bcrypt.compare(pw, user.pwhash, cb)
 
 authenticate = (username, pw, done) ->
-  User.findByName username, (err, user) ->
+  User.find(where: {name: username}).complete (err, user) ->
     # if there has been an error or the user could not be found, return the error
     if(err || !user)
       return done(err, null)
@@ -29,7 +29,7 @@ serializeUser = (user, done) ->
     done(null, user._id)
 
 deserializeUser = (id, done) ->
-  User.get id, (err, user) ->
+  User.find(id).complete (err, user) ->
     if(err || !user)
       return done(null, null, null)
     done(null, user)

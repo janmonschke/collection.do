@@ -7,12 +7,12 @@ module.exports =
     pass: null
   ,
   db:
-    admin: 'jan',
-    password: '123',
+    admin: 'root',
+    password: '',
     protocol: 'http',
     host: '127.0.0.1',
     port: '5984',
-    name: 'collection-data'
+    name: 'collection'
   ,
   embedly:
     key: 'badd0d5e8376450eaff81ea12c1ea490'

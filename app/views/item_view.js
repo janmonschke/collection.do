@@ -3,10 +3,10 @@ var ApplicationView = require('./application_view');
 
 var template = _.template("\
   <div class='item--headline-container'>\
-    <h1 class='item--headline'><%= content.title %></h1> \
+    <h1 class='item--headline'><%= title %></h1> \
   </div>\
   <div class='item--content'> \
-    <img src='<%= content.thumbnail_url %>' /> \
+    <img src='<%= thumbnail_url %>' /> \
   </div>\
 ");
 

@@ -19,7 +19,7 @@ var Router = AsyncRouter.extend({
 
   me: function(){
     var collections = new CollectionsCollection();
-    var collectionsView = new CollectionsView({collection: collections});
+    var collectionsView = new CollectionsView({collections: collections});
     collections.fetch().done(function(){
       this.switchToView(collectionsView);
     }.bind(this));
