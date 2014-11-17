@@ -36,7 +36,7 @@ module.exports = ApplicationView.extend({
   },
 
   appendItem: function(item){
-    this.itemList.prepend(new ItemView({model: item}).render());
+    this.itemList.append(new ItemView({model: item}).render());
   },
 
   createNewItem: function(event){

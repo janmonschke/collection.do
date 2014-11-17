@@ -38,6 +38,13 @@ class Controller
       if req.xhr
         res.json {error: 'Not found'}, 404
       else
-        res.render 'errors/401', 401
+        res.render 'errors/404', 404
+
+  500: (req, res, error) ->
+    console.error error
+    if req.xhr
+      res.json {error: 'Internal server error', errorObject: error}, 500
+    else
+      res.render 'errors/500', 500
 
 module.exports = Controller
