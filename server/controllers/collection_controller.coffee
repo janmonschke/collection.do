@@ -8,11 +8,14 @@ class CollectionController extends Controller
     'create' : @ensureAuthenticated
 
   index: (req, res) ->
-    req.user.getCollections(include: [{
-      model: User,
-      as: 'owners',
-      attributes: ['id', 'name']
-    }]).complete (err, collections) ->
+    req.user.getCollections({
+      order: 'createdAt DESC',
+      include: [{
+        model: User,
+        as: 'owners',
+        attributes: ['id', 'name']
+      }]
+    }).complete (err, collections) ->
       res.json collections
 
   create: (req, res) ->
